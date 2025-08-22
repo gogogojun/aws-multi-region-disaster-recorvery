@@ -5,3 +5,6 @@
 /mavenHomeManager.xml
 
 .terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
