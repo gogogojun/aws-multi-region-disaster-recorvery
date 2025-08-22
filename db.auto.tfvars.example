@@ -1,0 +1,12 @@
+db_name  = "shop"
+db_username = "admin"
+db_password = "CHANGE_ME"
+
+db_instance_class_writer = "db.t3.medium"
+db_instance_class_reader = "db.t3.medium"
+
+db_subnet_group_primary = "db-subnet-seoul"
+db_subnet_group_dr      = "db-subnet-osaka"
+
+db_sg_primary_ids = ["sg-PRIMARYDB"]
+db_sg_dr_ids      = ["sg-DRDB"]

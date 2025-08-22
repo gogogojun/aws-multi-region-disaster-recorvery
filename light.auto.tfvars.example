@@ -1,0 +1,9 @@
+# Required for CloudFront + GA + DNS
+acm_cert_arn_us_east_1 = "arn:aws:acm:us-east-1:123456789012:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+ga_dns_name            = "xxxxx.awsglobalaccelerator.com"
+ga_static_ips          = ["198.51.100.10","198.51.100.11"]
+hosted_zone_id         = "ZXXXXXXXXXXXXX"
+
+# (Optional) override domains
+medical_domain = "medical.nextcloudlab.com"
+admin_domain   = "admin.nextcloudlab.com"
