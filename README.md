@@ -32,18 +32,3 @@
 
 ---
 
-## Repository 구조
-- terraform_dr_stack_FINAL/
-  - main.tf
-  - providers.tf
-  - variables.tf
-  - outputs.tf
-  - modules/
-    - network/
-    - compute_primary/
-    - compute_dr/
-    - s3_mrap_attach/
-    - cloudfront_mrap_api/
-    - iam/
-    - ssm/
-
