@@ -30,5 +30,5 @@
 - **IAM & 보안**: EC2 Auto Scaling Group이 S3, CloudWatch, SSM에 접근할 수 있도록 **IAM Role & Instance Profile**을 구성.  
   최소 권한 정책(Least Privilege)을 적용해 보안을 강화하고, SSM Session Manager를 통해 안전하게 운영.  
 
----
+
 
