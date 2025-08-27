@@ -9,7 +9,7 @@
 
 ---
 
-## 아키텍처 개요
+## 아키텍처
 - **네트워크**: Primary/DR 리전 각각 VPC, Subnet, Route Table 구성 (NAT Gateway 미사용).  
 
 - **스토리지**: Primary/DR 리전별 S3 버킷을 생성하고 **Multi-Region Access Point(MRAP)** 을 구성.  
