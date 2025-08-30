@@ -46,7 +46,6 @@ variable "db_username" {
 }
 variable "db_password" {
   type      = string
-  default   = "asblk12345"
   sensitive = true
 }
 variable "db_instance_class_writer" {
