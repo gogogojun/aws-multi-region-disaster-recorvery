@@ -8,10 +8,16 @@ data "aws_availability_zones" "az_d" {
   state    = "available"
 }
 
+data "aws_caller_identity" "current" {}
+
 locals {
   azs_p = slice(data.aws_availability_zones.az_p.names, 0, 2)
   azs_d = slice(data.aws_availability_zones.az_d.names, 0, 2)
+  cf_distribution_arn = "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${module.cdn.distribution_id}"
+
 }
+
+
 
 # 1) Network (Primary & DR)
 module "net_p" {
@@ -174,9 +180,61 @@ module "s3_static" {
   bucket_name = "${var.project}-web"
 }
 
+# 10) DB 구성(writer,read)
+module "db" {
+  source    = "./modules/rds_mysql_dual"
+  providers = { aws.p = aws.p, aws.d = aws.d }
 
+  project     = var.project
+  db_name     = var.db_name
+  db_username = var.db_username
+  db_password = var.db_password
 
+  db_instance_class_writer = var.db_instance_class_writer
+  db_instance_class_reader = var.db_instance_class_reader
+  db_subnet_ids_primary    = module.net_p.app_subnet_ids
+  db_subnet_ids_dr         = module.net_d.app_subnet_ids
 
+  db_sg_primary_ids = [module.sec_p.db_sg_id]
+  db_sg_dr_ids      = [module.sec_d.db_sg_id]
+}
+
+# 11) MRAP over existing S3 buckets created by module.s3_static
+module "s3_mrap" {
+  source = "./modules/s3_mrap_attach"
+  providers = {
+    aws.us_east_1 = aws.us_east_1
+  }
+
+  project             = var.project
+  primary_bucket_name = module.s3_static.primary_bucket
+  dr_bucket_name      = module.s3_static.dr_bucket
+  cf_distribution_id  = module.cdn.distribution_id
+  depends_on          = [module.s3_static]
+}
+
+# 12) CloudFront: default=S3 MRAP, /api/* -> GA
+module "cdn" {
+  source = "./modules/cloudfront_mrap_api"
+
+  project                = var.project
+  mrap_alias             = module.s3_mrap.mrap_alias
+  api_origin_domain_name = module.ga.dns_name
+  # must be in us-east-1
+  domain_names = [var.medical_domain]
+}
+
+# 13) Route53 records
+module "dns" {
+  source = "./modules/route53_records"
+
+  hosted_zone_id            = var.hosted_zone_id
+  medical_fqdn              = var.medical_domain # "medical.nextcloudlab.com"
+  admin_fqdn                = var.admin_domain   # "admin.nextcloudlab.com"
+  cloudfront_domain_name    = module.cdn.domain_name
+  cloudfront_hosted_zone_id = module.cdn.hosted_zone_id
+  ga_dns_name               = module.ga.dns_name
+}
 # === Global Accelerator ===
 module "ga" {
   source = "./modules/ga"
