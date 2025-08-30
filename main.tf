@@ -144,10 +144,18 @@ module "compute_dr" {
 
   project       = var.project
   instance_type = var.instance_type
+  desired               = var.desired
+  min_size              = var.min_size
+  max_size              = var.max_size
   app_sg_id     = module.sec_d.app_sg_id
   user_data_b64 = base64encode(var.user_data_bash)
   instance_profile_name = module.iam_p.instance_profile_name
+  launch_template_id = module.compute_dr.launch_template_id
+  app_subnet_ids     = module.net_d.app_subnet_ids
+  tg_arn             = module.alb_d.tg_arn
 }
+
+
 
 # 8) SSM Deploy Document
 module "ssm_p" {
@@ -247,17 +255,3 @@ module "ga" {
   alb_arn_dr      = module.alb_d.alb_arn
 }
 
-# === DR ASG (pre-provision, desired=0) ===
-module "compute_dr_asg" {
-  source    = "./modules/compute_dr_asg"
-  providers = { aws = aws.d }
-
-  project            = var.project
-  launch_template_id = module.compute_dr.launch_template_id
-  app_subnet_ids     = module.net_d.app_subnet_ids
-  tg_arn             = module.alb_d.tg_arn
-
-  min_size = 2
-  max_size = 4
-  desired  = 2
-}

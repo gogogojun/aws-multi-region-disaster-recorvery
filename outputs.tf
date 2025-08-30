@@ -19,4 +19,4 @@ output "s3_dr_bucket" {
 
 
 output "ga_accelerator_arn" { value = module.ga.accelerator_arn }
-output "dr_asg_name" { value = module.compute_dr_asg.asg_dr_name }
+output "dr_asg_name" { value = module.compute_dr.asg_dr_name }
