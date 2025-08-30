@@ -10,6 +10,8 @@
 ---
 
 ## 아키텍처
+<img width="1151" height="1211" alt="multi region drawio" src="https://github.com/user-attachments/assets/ec3d3fa4-31a8-4260-88ff-a80e7a596f5e" />
+
 - **네트워크**: Primary/DR 리전 각각 VPC, Subnet, Route Table 구성 (NAT Gateway 미사용).  
 
 - **스토리지**: Primary/DR 리전별 S3 버킷을 생성하고 **Multi-Region Access Point(MRAP)** 을 구성.  
@@ -17,6 +19,9 @@
 
 - **콘텐츠 전송**: **CloudFront Distribution**을 MRAP과 연동해 정적 콘텐츠를 글로벌 캐싱 및 전송.  
 
+- **DNS 관리**: **Route 53**을 통해 도메인을 관리하고,  
+  헬스체크 기반으로 Primary 리전의 상태를 감지하여 Global Accelerator/CloudFront와 함께 Failover를 지원.
+  
 - **로드 밸런서/트래픽 전환**: 서울·오사카 리전에 ALB를 이중 배치하고,  
   **Global Accelerator 헬스체크** 기반 Active–Passive Failover을 구성해 정상 시에는 Primary가 트래픽을 처리하고,  
   장애 발생 시 DR 리전으로 자동 전환.  
