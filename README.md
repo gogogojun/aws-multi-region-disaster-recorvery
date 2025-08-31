@@ -10,7 +10,8 @@
 ---
 
 ## 아키텍처
-<img width="1151" height="1211" alt="multi region drawio" src="https://github.com/user-attachments/assets/ec3d3fa4-31a8-4260-88ff-a80e7a596f5e" />
+<img width="1152" height="1211" alt="multi region drawio (1)" src="https://github.com/user-attachments/assets/81ee56ec-ed59-4afe-bc57-867009831905" />
+
 
 - **네트워크**: Primary/DR 리전 각각 VPC, Subnet, Route Table 구성 (NAT Gateway 미사용).  
 
