@@ -17,7 +17,7 @@
 
 - **스토리지**: Primary/DR 리전별 S3 버킷을 생성하고 **Multi-Region Access Point(MRAP)** 을 구성.  
   Cross-Region Replication(CRR)로 데이터를 동기화하며, CloudFront의 Origin으로 활용.  
-
+   - github actions: https://github.com/gogogojun/dr-web
 - **콘텐츠 전송**: **CloudFront Distribution**을 MRAP과 연동해 정적 콘텐츠를 글로벌 캐싱 및 전송.  
 
 - **DNS 관리**: **Route 53**을 통해 도메인을 관리하고,  
