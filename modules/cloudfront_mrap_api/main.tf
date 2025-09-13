@@ -52,7 +52,7 @@ resource "aws_cloudfront_distribution" "this" {
   is_ipv6_enabled = true
   aliases         = var.domain_names
   comment         = "${var.project} MRAP + /api via GA"
-  tags       = { Name = "${var.project}-cdn"}
+  tags       = { Project = "${var.project}-cdn"}
   origin {
     domain_name = "${var.mrap_alias}.accesspoint.s3-global.amazonaws.com"
     origin_id   = "s3-mrap"
