@@ -3,6 +3,7 @@ terraform {
     aws = { source = "hashicorp/aws" }
   }
 }
+
 variable "hosted_zone_id" { type = string }
 variable "medical_fqdn" { type = string } # "medical.nextcloudlab.com"
 variable "admin_fqdn" { type = string }   # "admin.nextcloudlab.com"

@@ -14,6 +14,7 @@ variable "alb_arn_dr" { type = string }
 resource "aws_globalaccelerator_accelerator" "this" {
   name    = "${var.project}-ga"
   enabled = true
+  tags       = { Name = "${var.project}-ga" }
 }
 
 

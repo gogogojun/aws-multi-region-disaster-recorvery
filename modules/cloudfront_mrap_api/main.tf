@@ -52,7 +52,7 @@ resource "aws_cloudfront_distribution" "this" {
   is_ipv6_enabled = true
   aliases         = var.domain_names
   comment         = "${var.project} MRAP + /api via GA"
-
+  tags       = { Name = "${var.project}-cdn"}
   origin {
     domain_name = "${var.mrap_alias}.accesspoint.s3-global.amazonaws.com"
     origin_id   = "s3-mrap"
@@ -111,6 +111,7 @@ resource "aws_cloudfront_distribution" "this" {
     minimum_protocol_version       = "TLSv1.2_2021"
     cloudfront_default_certificate = false
   }
+
 }
 
 output "domain_name" { value = aws_cloudfront_distribution.this.domain_name }
