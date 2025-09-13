@@ -5,7 +5,7 @@
 장애 발생 시 자동으로 대처 가능한 멀티 리전 아키텍처를 **Terraform 기반 IaC**로 구축한 프로젝트입니다.  
 
 실제 장애 시나리오를 가정하여 RTO와 RPO를 측정하고 이를 **Test Report**에 기록했으며,  
-그 결과를 바탕으로 **Runbook**을 제작하여 재해 발생 시 관리자가 따라야 할 대응 절차를 문서화했습니다.  
+그 결과를 바탕으로 **Runbook**(DR_Runbook.pdf)을 제작하여 재해 발생 시 관리자가 따라야 할 대응 절차를 문서화했습니다.  
 
 ---
 
@@ -17,7 +17,7 @@
 
 - **스토리지**: Primary/DR 리전별 S3 버킷을 생성하고 **Multi-Region Access Point(MRAP)** 을 구성.  
   Cross-Region Replication(CRR)로 데이터를 동기화하며, CloudFront의 Origin으로 활용.  
-
+   - github actions: https://github.com/gogogojun/dr-web
 - **콘텐츠 전송**: **CloudFront Distribution**을 MRAP과 연동해 정적 콘텐츠를 글로벌 캐싱 및 전송.  
 
 - **DNS 관리**: **Route 53**을 통해 도메인을 관리하고,  
